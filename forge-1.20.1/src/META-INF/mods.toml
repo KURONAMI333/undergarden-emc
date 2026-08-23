@@ -1,0 +1,43 @@
+modLoader="lowcodefml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+issueTrackerURL="https://github.com/KURONAMI333/undergarden-emc/issues"
+
+[[mods]]
+modId="undergarden_emc"
+version="0.1.0"
+displayName="The Undergarden ProjectE EMC"
+authors="KURONAMI"
+logoFile="undergarden_emc.png"
+displayURL="https://github.com/KURONAMI333/undergarden-emc"
+description='''
+Adds ProjectE EMC values to The Undergarden. Values pending. Requires ProjectE and The Undergarden.
+'''
+
+[[dependencies.undergarden_emc]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.undergarden_emc]]
+    modId="forge"
+    mandatory=false
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.undergarden_emc]]
+    modId="projecte"
+    mandatory=true
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.undergarden_emc]]
+    modId="undergarden"
+    mandatory=true
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -34,6 +34,118 @@ RUNCLIENT_OWNER=undergarden-emc _tools/runclient_fresh.sh \
 
 ---
 
+## 1.5 1.21.1 dedicated server（headless・runClient を潰せない時の代替経路）
+
+他セッションの dev client（runClient）が生きていて `_tools/runclient_fresh.sh` を撃てない場合、
+dedicated server で同じ parse 経路を検証できる（ProjectE の `pe_custom_conversions` はサーバ側 datapack として読まれるため）。
+実測・再現確認済み（2026-08-24）。置き場は `_research/v1201-hosts/server` と同じ並びの `_research/v1211-hosts/server`。
+
+### セットアップ（初回のみ）
+
+```bash
+export JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-21.0.10.7-hotspot"
+cd "C:/Users/naoki/dev/projects/minecraft-mod-dev/_research/v1211-hosts"
+curl -sL -o neoforge-21.1.227-installer.jar \
+  https://maven.neoforged.net/releases/net/neoforged/neoforge/21.1.227/neoforge-21.1.227-installer.jar
+cd server
+"$JAVA_HOME/bin/java" -jar ../neoforge-21.1.227-installer.jar --installServer
+printf "eula=true\n" > eula.txt
+mkdir -p mods
+cp "C:/Users/naoki/curseforge/minecraft/Instances/2605_nf21_Magi/mods/ProjectE-1.21.1-PE1.1.0.jar" mods/
+cp "C:/Users/naoki/dev/workspace/undergarden_hosts/The_Undergarden-1.21.1-0.9.6.jar" mods/
+cp "<mod-073-undergarden-emc>/build/libs/undergarden_emc-0.1.0.jar" mods/
+```
+
+`server.properties` に **RCON を有効化する**（stop コマンド到達性の唯一の確実な経路。§2 の stdin/FIFO は 1.20.1 で全滅した）:
+
+```
+level-name=world
+online-mode=false
+enable-rcon=true
+rcon.port=25575
+rcon.password=<任意>
+```
+
+### 起動と操作（毎回）
+
+```bash
+export JAVA_HOME="/c/Program Files/Eclipse Adoptium/jdk-21.0.10.7-hotspot"
+cd "C:/Users/naoki/dev/projects/minecraft-mod-dev/_research/v1211-hosts/server"
+nohup "$JAVA_HOME/bin/java" @user_jvm_args.txt @libraries/net/neoforged/neoforge/21.1.227/win_args.txt nogui > run.out 2>&1 &
+```
+
+`win_args.txt` を直接指定する（1.20.1 の unix_args.txt 問題と同型の Windows/Git Bash 地雷を避ける。1.21.1 の NeoForge installer は `run.bat`/`run.sh` の両方を最初から生成するので、1.20.1 のような `run.sh` 単独失敗は起きない。念のため win_args.txt を直接使う形に統一する）。
+
+**起動した Windows PID を必ず確認する**（`jps -l` で `cpw.mods.bootstraplauncher.BootstrapLauncher` が新規に出る。`bash` の `$!` は MSYS PID で Windows PID と一致しないので使わない）。
+
+### 重要: 1.21.1 の EMC マッピングは起動直後には走らない
+
+1.20.1（PE1.0.1）と違い、**1.21.1（PE1.1.0）は `OnDatapackSyncEvent` でしか EMC マッピングを計算しない**
+（`moze_intel.projecte.PECore.dataPackSync`、逆アセンブル実測）。この event はプレイヤーの join 時か `/reload` でしか飛ばない。
+**headless dedicated server はプレイヤーが繋がないので、`Done` まで起動しただけでは EMC マッピングは一度も走らない**
+（`Registered N EMC values` も `Considering file` も出ない）。
+
+RCON で `reload` を1回撃つ:
+
+```bash
+python3 - <<'PYEOF'
+import socket, struct
+HOST, PORT, PASSWORD = "127.0.0.1", 25575, "<設定したパスワード>"
+def pkt(sock, rid, ptype, payload):
+    data = struct.pack("<ii", rid, ptype) + payload.encode("utf8") + b"\x00\x00"
+    sock.send(struct.pack("<i", len(data)) + data)
+def read(sock):
+    length = struct.unpack("<i", sock.recv(4))[0]
+    data = b""
+    while len(data) < length:
+        data += sock.recv(length - len(data))
+    return struct.unpack("<ii", data[:8]), data[8:-2].decode("utf8", "replace")
+s = socket.create_connection((HOST, PORT), timeout=10)
+pkt(s, 1, 3, PASSWORD); read(s)
+pkt(s, 2, 2, "reload"); print(read(s)[1])
+s.close()
+PYEOF
+```
+
+### ワールドロード後に見るログ（1.21.1 の実際のログレベル）
+
+**`Considering file` は DEBUG レベルでしか出ない**（`logs/latest.log` には出ず、`logs/debug.log` にのみ出る）。
+`Registered N EMC values.` は `Server thread/INFO` で `logs/latest.log`（console 出力）にも出る。
+ロガー表記は latest.log では短縮形 `mo.pr.PECore`、debug.log ではフル `moze_intel.projecte.PECore`（同一ロガー）。
+
+- `logs/debug.log`: `grep "Considering file undergarden:pe_custom_conversions" logs/debug.log`
+- `logs/latest.log`（または console 出力）: `grep "Registered .* EMC values" logs/latest.log`
+- `JsonParseException` / `JsonSyntaxException` / `Unknown registry key` の0件確認は `logs/debug.log` 全体をロガー別に見る（`minecraft/RecipeManager` 由来は責任外、`PECore` 由来だけが対象）
+
+### サーバーの正常終了
+
+**RCON で `stop` を送る**。1.20.1 で試した stdin EOF / named pipe は届かなかったが、RCON は確実に届く:
+
+```bash
+# 上と同じ python スニペットの reload を stop に変えるだけ
+```
+
+`stop` 到達を `jps -l` で確認する（プロセスが消えていること）。**taskkill は使わない**（RCON が確立していれば不要）。
+
+### 既知の制約: `dumpToFile=true` は 1.21.1（PE1.1.0）でクラッシュする
+
+`config/ProjectE/mapping.toml` の `dumpToFile` を `true` にして `/reload` すると、
+`mo.pr.PECore` が **ERROR** で `Failed to convert custom conversion to json: Value must not be zero: 0; ...`
+（および `Element with unknown name: 0`）を大量に吐き、`mapping_dump.json` が**一切生成されない**。
+
+**本アドオンが原因ではない**: 本アドオンの jar を `mods/` から抜いた状態（ProjectE + Undergarden のみ）でも
+同じエラーが再現する（2026-08-24 実測）。`Ore-Blacklist-Mapper` / `Raw-Ore-Blacklist-Mapper` を無効化しても
+`Value must not be zero` は消えない（`Element with unknown name` は減るが0にはならない）。
+**ProjectE 1.1.0 の `DumpToFileCollector` 側の既知バグとして扱う**（EMC=0 の custom conversion を含む環境では
+dump 書き出しがコード全体を通して失敗する）。
+
+したがって **1.21.1 セルでは §3 の dump による機械照合ができない**。parse エラー0件の確認と
+`Registered N` の総数比較（addon 込み/抜きの差分）までが実測できる範囲。
+将来 ProjectE がこのバグを直したら §3 の手順をそのまま使える（JSON 構造自体は 1.20.1 と同名の
+`mapping_dump.json`＝ハイフン無しで想定通りのはず。未検証）。
+
+---
+
 ## 2. 1.20.1 Forge dedicated server
 
 JDK17 で起動する（Forge 1.20.1 の要件。1.21.1 の JDK21 と混同しない）。
@@ -104,6 +216,8 @@ ProjectE jar の逆アセンブルで実測）。**無効化された環境は�
 1. **ORE_BLOCK（鉱石ブロック10件）に EMC が付いていないこと**
    対象 id: `undergarden:depthrock_cloggrum_ore` / `depthrock_regalium_ore` / `depthrock_utherium_ore` / `dreadrock_rogdorium_ore` / `dreadrock_utherium_ore` / `shiverstone_cloggrum_ore` / `shiverstone_froststeel_ore` / `shiverstone_regalium_ore` / `shiverstone_utherium_ore` / `tremblecrust_utherium_ore`
    dump JSON をこれらの id で grep し、`values`（または values セクション）に出現しないこと、または出現していても他コンバージョンから導出された値が無いことを確認する。
+   **このリストは 1.21.1 専用（dreadrock 系2件を含む10件）。1.20.1 セルでは dreadrock 系の id 自体が存在しないため実在8件のみで照合する**
+   （`_handoff/UNDERGARDEN_EMC_SPEC.md` §1.4。このリストをそのまま 1.20.1 の検証にコピーしない）。
 
 2. **VANILLA_DROP 系（7件: `depthrock_coal_ore`/`depthrock_diamond_ore`/`depthrock_gold_ore`/`depthrock_iron_ore`/`shiverstone_coal_ore`/`shiverstone_diamond_ore`/`shiverstone_iron_ore`）に触れておらず、バニラ coal/iron/gold/diamond の EMC が動いていないこと**
    ProjectE 単体（The Undergarden 抜き）で一度 dump を取り、`minecraft:coal` / `minecraft:iron_ingot` / `minecraft:gold_ingot` / `minecraft:diamond` の EMC 値を控える。The Undergarden + このアドオン込みで dump を取り直し、同じ4値が変化していないことを突合する。

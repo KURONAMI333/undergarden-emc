@@ -1,7 +1,408 @@
 {
   "replace": false,
-  "comment": "placeholder — values pending",
+  "comment": "The Undergarden EMC integration for ProjectE (KURONAMI). Values per _handoff/UNDERGARDEN_EMC_SPEC.md. Ore blocks and raw_cloggrum/raw_froststeel intentionally have no EMC: ProjectE's OreBlacklistMapper / RawMaterialsBlacklistMapper force them to 0 (c:ores / c:raw_materials). Gear (tools/armor/trims) intentionally has no EMC.",
   "values": {
-    "before": []
+    "before": [
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:depthrock"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2,
+        "id": "undergarden:shiverstone"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 4,
+        "id": "undergarden:tremblecrust"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 8,
+        "id": "undergarden:dreadrock"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:smog_vent"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:sediment"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:deepsoil"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:deepsoil_farmland"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:deepturf_block"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:ashen_deepturf_block"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:frozen_deepturf_block"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:deepturf"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:ashen_deepturf"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:frozen_deepturf"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:glitterkelp"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1,
+        "id": "undergarden:hanging_grongle_leaves"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:blisterberry"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:rotten_blisterberry"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:underbeans"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:ditchbulb"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:droopvine_item"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:seeping_ink"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 16,
+        "id": "undergarden:mushroom_veil"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:gronglet"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:utherium_growth"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 144,
+        "id": "undergarden:gloomgourd"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 144,
+        "id": "undergarden:carved_gloomgourd"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:blood_mushroom"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:indigo_mushroom"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:ink_mushroom"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:puff_mushroom"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:veil_mushroom"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:blood_mushroom_stem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:indigo_mushroom_stem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:ink_mushroom_stem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:puff_mushroom_stem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:veil_mushroom_stem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:blood_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:indigo_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:ink_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:puff_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:veil_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 256,
+        "id": "undergarden:engorged_blood_mushroom_cap"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:blood_globule"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 32,
+        "id": "undergarden:goo_ball"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 128,
+        "id": "undergarden:goo"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 48,
+        "id": "undergarden:mogmoss"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 48,
+        "id": "undergarden:blue_mogmoss"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:raw_dweller_meat"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:raw_gloomper_leg"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 64,
+        "id": "undergarden:raw_gwibling"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 192,
+        "id": "undergarden:brute_tusk"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 288,
+        "id": "undergarden:cloggrum_ingot"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1152,
+        "id": "undergarden:froststeel_ingot"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 256,
+        "id": "undergarden:utheric_shard"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:regalium_crystal"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 4608,
+        "id": "undergarden:rogdorium"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1024,
+        "id": "undergarden:forgotten_nugget"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 1024,
+        "id": "undergarden:rogdoric_ancient_root"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 7497,
+        "id": "undergarden:forgotten_upgrade_smithing_template"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:music_disc_mammoth"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:music_disc_limax_maximus"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:music_disc_relict"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:music_disc_gloomper_anthem"
+      },
+      {
+        "type": "projecte:item",
+        "emc_value": 2048,
+        "id": "undergarden:music_disc_gloomper_secret"
+      }
+    ]
+  },
+  "groups": {
+    "infuser": {
+      "comment": "The Undergarden infuser is a custom recipe type, so ProjectE cannot derive these. The catalyst slot is consumed once per craft (InfuserBlockEntity#infuse), so it is part of the cost.",
+      "conversions": [
+        {
+          "output": {
+            "type": "projecte:item",
+            "id": "undergarden:utherium_crystal"
+          },
+          "count": 1,
+          "ingredients": [
+            {
+              "type": "projecte:item",
+              "id": "undergarden:utheric_cluster"
+            },
+            {
+              "type": "projecte:item",
+              "id": "undergarden:rogdorium"
+            }
+          ]
+        },
+        {
+          "output": {
+            "type": "projecte:item",
+            "id": "undergarden:rogdoric_gronglet"
+          },
+          "count": 1,
+          "ingredients": [
+            {
+              "type": "projecte:item",
+              "id": "undergarden:gronglet"
+            },
+            {
+              "type": "projecte:item",
+              "id": "undergarden:rogdorium"
+            }
+          ]
+        },
+        {
+          "output": {
+            "type": "projecte:item",
+            "id": "undergarden:denizen_totem"
+          },
+          "count": 1,
+          "ingredients": [
+            {
+              "type": "projecte:item",
+              "id": "undergarden:ancient_root"
+            },
+            {
+              "type": "projecte:item",
+              "id": "undergarden:rogdorium"
+            }
+          ]
+        },
+        {
+          "output": {
+            "type": "projecte:item",
+            "id": "undergarden:utheric_gronglet"
+          },
+          "count": 1,
+          "ingredients": [
+            {
+              "type": "projecte:item",
+              "id": "undergarden:gronglet"
+            },
+            {
+              "type": "projecte:item",
+              "id": "undergarden:utherium_crystal"
+            }
+          ]
+        }
+      ]
+    }
   }
 }

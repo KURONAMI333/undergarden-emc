@@ -1,6 +1,6 @@
 """Generate data/undergarden/pe_custom_conversions/undergarden_emc.json (NeoForge 1.21.1).
 
-Values come from `_handoff/UNDERGARDEN_EMC_SPEC.md` SS3 (values.before, 65 id) and SS4
+Values come from `_handoff/UNDERGARDEN_EMC_SPEC.md` SS3 (values.before, 64 id) and SS4
 (groups.infuser, 4 conversions). Every number below is copied from that spec, not
 invented here -- this script only encodes the ProjectE 1.21.1 JSON shape.
 
@@ -57,7 +57,7 @@ BEFORE = {
     "deepturf": (1, "vanilla short_grass anchor"),
     "ashen_deepturf": (1, "same as deepturf"),
     "frozen_deepturf": (1, "same as deepturf"),
-    # SS3.2 P gatherables (13)
+    # SS3.2 P gatherables (12)
     "glitterkelp": (1, "vanilla kelp anchor; keeps derived dried_kelp value at 1"),
     "hanging_grongle_leaves": (
         1,
@@ -76,7 +76,12 @@ BEFORE = {
         "utherium vein decor, zero crafting use; fungus band, not ore band",
     ),
     "gloomgourd": (144, "c:pumpkins/normal anchor; yields seeds, carvable"),
-    "carved_gloomgourd": (144, "worldgen-carved state; carving itself has no EMC cost"),
+    # `carved_gloomgourd` deliberately has no entry, mirroring vanilla
+    # `minecraft:carved_pumpkin`: no recipe produces it, so ProjectE derives no value for
+    # it either. Carving costs 144 (the gourd) and returns 4 gloomgourd_seeds derived at
+    # 144/4 = 36 each, so the operation breaks even. Pricing the carved block would make
+    # every carve a free +144. `gloom_o_lantern` / `shard_o_lantern` therefore carry no
+    # EMC, exactly as vanilla `jack_o_lantern` does not.
     # SS3.3 P mushrooms (17)
     "blood_mushroom": (32, "vanilla red/brown_mushroom anchor"),
     "indigo_mushroom": (32, "vanilla red/brown_mushroom anchor"),

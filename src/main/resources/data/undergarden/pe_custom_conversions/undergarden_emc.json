@@ -135,11 +135,6 @@
       },
       {
         "type": "projecte:item",
-        "emc_value": 144,
-        "id": "undergarden:carved_gloomgourd"
-      },
-      {
-        "type": "projecte:item",
         "emc_value": 32,
         "id": "undergarden:blood_mushroom"
       },

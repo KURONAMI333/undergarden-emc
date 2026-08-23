@@ -1,8 +1,8 @@
 """Generate data/undergarden/pe_custom_conversions/undergarden_emc.json
 for ProjectE on Minecraft 1.20.1 (PE1.0.1).
 
-Values come from `_handoff/UNDERGARDEN_EMC_SPEC.md` SS5 (values.before, 53 id), which
-is the 1.21.1 SS3 table (65 id) minus the 7 id that don't exist on 1.20.1 (SS5.2 "1.21.1
+Values come from `_handoff/UNDERGARDEN_EMC_SPEC.md` SS5 (values.before, 52 id), which
+is the 1.21.1 SS3 table (64 id) minus the 7 id that don't exist on 1.20.1 (SS5.2 "1.21.1
 にあって1.20.1に無い") minus the 5 music discs, which 1.20.1 does NOT need written by
 hand: `minecraft:music_discs` already carries EMC 2048 in PE1.0.1's own defaults.json,
 so writing them here would just duplicate a value ProjectE already supplies (SS5.2
@@ -58,7 +58,7 @@ BEFORE = {
     "deepturf": (1, "vanilla grass (short_grass on 1.21.1) anchor"),
     "ashen_deepturf": (1, "same as deepturf"),
     "frozen_deepturf": (1, "same as deepturf"),
-    # SS3.2 P gatherables (12; utherium_growth dropped, SS5.2)
+    # SS3.2 P gatherables (11; utherium_growth dropped, SS5.2)
     "glitterkelp": (1, "vanilla kelp anchor; keeps derived dried_kelp value at 1"),
     "hanging_grongle_leaves": (
         1,
@@ -72,8 +72,13 @@ BEFORE = {
     "seeping_ink": (16, "shears-only self-drop decor; vanilla ink_sac anchor"),
     "mushroom_veil": (16, "hanging decor plant; small_flowers anchor"),
     "gronglet": (32, "grongle fruit; crimson/warped_fungus anchor"),
-    "gloomgourd": (144, "forge:pumpkins/normal anchor; yields seeds, carvable"),
-    "carved_gloomgourd": (144, "worldgen-carved state; carving itself has no EMC cost"),
+    "gloomgourd": (144, "minecraft:pumpkin anchor; yields seeds, carvable"),
+    # `carved_gloomgourd` deliberately has no entry, mirroring vanilla
+    # `minecraft:carved_pumpkin`: no recipe produces it, so ProjectE derives no value for
+    # it either. Carving costs 144 (the gourd) and returns 4 gloomgourd_seeds derived at
+    # 144/4 = 36 each, so the operation breaks even. Pricing the carved block would make
+    # every carve a free +144. `gloom_o_lantern` / `shard_o_lantern` therefore carry no
+    # EMC, exactly as vanilla `jack_o_lantern` does not.
     # SS3.3 P mushrooms (14; puff_mushroom/_stem/_cap dropped, SS5.2 -- 1.21.1-only)
     "blood_mushroom": (32, "vanilla red/brown_mushroom anchor"),
     "indigo_mushroom": (32, "vanilla red/brown_mushroom anchor"),

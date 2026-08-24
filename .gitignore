@@ -4,3 +4,4 @@ run/
 repo/
 *.hprof
 runclient-hosts.gradle
+branding/

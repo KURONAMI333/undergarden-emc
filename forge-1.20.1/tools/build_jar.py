@@ -4,10 +4,9 @@ A lowcodefml mod is a plain zip: META-INF/mods.toml + pack.mcmeta + data/** (+ l
 if present). Everything under src/ is zipped verbatim. Output ->
 build/undergarden_emc-<version>+forge-1.20.1.jar.
 
-No logo PNG exists yet for this mod (branding is a separate kura-approval gate); this
-script does not fail on that. mods.toml already references logoFile="undergarden_emc.png"
--- if that file is still absent when this runs, the jar is packed without it and
-Forge/NeoForge treats a missing optional logo as no logo at runtime, not a load error.
+The logo PNG is optional here. mods.toml references logoFile="undergarden_emc.png" --
+if that file is absent when this runs, the jar is packed without it and Forge/NeoForge
+treats a missing optional logo as no logo at runtime, not a load error.
 
 Usage: python tools/build_jar.py
 """

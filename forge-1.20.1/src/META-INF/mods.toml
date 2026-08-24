@@ -11,7 +11,7 @@ authors="KURONAMI"
 logoFile="undergarden_emc.png"
 displayURL="https://github.com/KURONAMI333/undergarden-emc"
 description='''
-Adds ProjectE EMC values to The Undergarden. Values pending. Requires ProjectE and The Undergarden.
+Adds ProjectE EMC values to The Undergarden. Hand-tuned EMC for its core materials (cloggrum, froststeel, utherium, regalium and friends); the rest derives from the host's own recipes. Tools, weapons and armour intentionally have no EMC. Requires ProjectE and The Undergarden.
 '''
 
 [[dependencies.undergarden_emc]]

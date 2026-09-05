@@ -1,5 +1,3 @@
-# ProjectE: EMC for The Undergarden
-
 With this add-on, The Undergarden's materials gain EMC and can be used in ProjectE's transmutation system; without it, ProjectE cannot use them. Its values keep unusual block and item forms from becoming alternate EMC sources.
 
 ## What is valued
@@ -32,5 +30,9 @@ The Undergarden's five music discs already receive EMC through ProjectE's disc t
 
 - ProjectE is required.
 - The Undergarden is required.
-- Minecraft 1.21.1 on NeoForge, and Minecraft 1.20.1 on Forge, are supported.
-- This is server-side data; clients do not need to install it.
+
+All Rights Reserved. Modpack inclusion is allowed without permission or credit.
+
+Bugs and questions: comment on the CurseForge page, or DM @kuronami333 on X.
+
+[Source](https://github.com/KURONAMI333/undergarden-emc)
